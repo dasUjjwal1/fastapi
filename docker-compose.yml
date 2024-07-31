@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    user: postgres
+    container_name: postgres-python
+    volumes:
+      - py-db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "6700:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  py-db-data:
